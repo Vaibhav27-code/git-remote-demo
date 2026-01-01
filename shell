@@ -1,0 +1,161 @@
+1)Write a shell script that will take the year as a input from the user and inform user whether it is a leap year or not. Display the output in the blinking text.(Hint: tput command)
+
+Code:-#!/bin/bash
+
+echo "Enter the year:"
+read year
+
+if [ $((year % 400)) -eq 0 ] || { [ $((year % 4)) -eq 0 ] && [ $((year % 100)) -ne 0 ]; }
+then
+    tput blink
+    echo "$year is a Leap Year"
+else
+    tput blink
+    echo "$year is NOT a Leap Year"
+fi
+
+tput sgr0
+
+2)
+Write a shell script that will take the name of a file from the user and check if the file is modified or not and display the message accordingly to the user. (Hint: use diff command. Check the exit status of the diff command)
+Code:-#!/bin/bash
+
+echo "Enter file name:"
+read file
+
+if [ ! -f "$file" ]; then
+    echo "File does not exist"
+    exit 1
+fi
+
+cp "$file" backup_file
+
+echo "Modify the file now and press Enter"
+read
+
+diff "$file" backup_file
+
+if [ $? -eq 0 ]; then
+    echo "File is NOT modified"
+else
+    echo "File IS modified"
+fi
+
+rm backup_file
+3)Write a shell script to generate the Fibonacci series up to a specified number. Take a number from the user and display the Fibonacci series upto this number. 
+Code:-
+#!/bin/bash
+
+echo "Enter a number:"
+read n
+
+a=0
+b=1
+
+echo "Fibonacci series up to $n:"
+while [ $a -le $n ]
+do
+    echo -n "$a "
+    c=$((a + b))
+    a=$b
+    b=$c
+done
+echo
+4)Write a shell script. Write 4 functions each for addition, subtraction, division and multiplication of 2 numbers. Ask user to enter 2 numbers. Also ask user the operation user wants to perform and then call the respective function and display the result. Use case statement. 
+Code:-#!/bin/bash
+
+add() {
+    echo "Addition = $(( $1 + $2 ))"
+}
+
+sub() {
+    echo "Subtraction = $(( $1 - $2 ))"
+}
+
+mul() {
+    echo "Multiplication = $(( $1 * $2 ))"
+}
+
+div() {
+    echo "Division = $(( $1 / $2 ))"
+}
+
+echo "Enter first number:"
+read a
+echo "Enter second number:"
+read b
+echo "Enter operation (add/sub/mul/div):"
+read op
+
+case $op in
+    add) add $a $b ;;
+    sub) sub $a $b ;;
+    mul) mul $a $b ;;
+    div) div $a $b ;;
+    *) echo "Invalid operation" ;;
+esac
+
+5)Write the above script such that the script will not prompt user for anything. User will execute the script as shown below.
+
+	./calc.sh      add    10    20    
+OR           ./calc.sh     div     10    2
+Code:-
+#!/bin/bash
+
+add() {
+    echo "Result = $(( $1 + $2 ))"
+}
+
+sub() {
+    echo "Result = $(( $1 - $2 ))"
+}
+
+mul() {
+    echo "Result = $(( $1 * $2 ))"
+}
+
+div() {
+    echo "Result = $(( $1 / $2 ))"
+}
+
+case $1 in
+    add) add $2 $3 ;;
+    sub) sub $2 $3 ;;
+    mul) mul $2 $3 ;;
+    div) div $2 $3 ;;
+    *) echo "Usage: ./calc.sh add|sub|mul|div num1 num2" ;;
+esac
+
+6)Write the script that will take a number from the user and display whether the number is an odd or even number. Display the prompt in Red color. Display the output in Blue color and blinking text. 
+Code:-
+#!/bin/bash
+
+tput setaf 1
+echo "Enter a number:"
+tput sgr0
+
+read num
+
+tput setaf 4
+tput blink
+if [ $((num % 2)) -eq 0 ]; then
+    echo "Even Number"
+else
+    echo "Odd Number"
+fi
+
+tput sgr0
+7)Write a shell script that will take a number from the user and display the square and square root of the number.  
+Code:-
+#!/bin/bash
+
+echo "Enter a number:"
+read num
+
+square=$((num * num))
+sqrt=$(echo "scale=2; sqrt($num)" | bc)
+
+echo "Square = $square"
+echo "Square Root = $sqrt"
+
+
