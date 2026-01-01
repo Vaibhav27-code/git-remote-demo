@@ -1,0 +1,29 @@
+docker run -d --name web1 -p 8000:80 httpd
+
+http://localhost:8000
+docker cp index.html web1:/usr/local/apache2/htdocs/index.html
+
+docker stop web1
+docker rm web1
+
+
+2)FROM ubuntu
+RUN apt update -y
+RUN apt install python3 -y
+COPY app1.py /app1/app1.py
+CMD ["/bin/python3", "/app1/app1.py"]
+
+
+FROM httpd
+COPY index.html /usr/local/apache2/htdocs/
+
+docker build -t image_name .
+
+docker run -d --name web3 -p 8000:80 image_name
+
+3)docker login
+docker logout
+
+docker tag webapp1 username/webapp1:v1
+
+docker push username/webapp1:v1
