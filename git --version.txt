@@ -1,0 +1,54 @@
+git --version
+git config --global user.name "Your Name"
+git config --global user.email "youremail@gmail.com"
+
+
+mkdir demo
+cd demo
+git init
+
+
+touch index.html
+git add index.html
+git commit -m "Added index.html"
+
+git status
+git add filename
+git add .
+git commit -m "commit message"
+
+git log
+git log --oneline
+git status
+
+nano file1.c
+git add file1.c
+git commit -m "Updated file1"
+
+git log
+git checkout <commit-hash> -- file1.c
+
+git branch
+git branch UI
+git checkout UI
+git checkout -b dbconn
+
+git checkout main
+git merge UI
+git merge dbconn
+
+
+
+git clone https://github.com/username/repo.git
+cd repo
+
+git remote add origin https://github.com/username/repo.git
+git branch -M main
+git push -u origin main
+
+
+git add .
+git commit -m "message"
+git push
+
+
